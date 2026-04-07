@@ -2,6 +2,10 @@
 
 A Python tool for calculating the **Hurst Exponent** of financial time series — a statistical measure that reveals whether a market is trending, random, or mean-reverting. Built for systematic traders, options sellers, and anyone who wants to understand the structural character of a market before placing a trade.
 
+![Example Hurst chart for USO](hurst_USO.png)
+
+*Example output for `USO`, including price history, R/S, DFA, and rolling 63d/126d/252d Hurst series.*
+
 ---
 
 ## What Is the Hurst Exponent?
