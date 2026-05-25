@@ -14,6 +14,7 @@ Verwendung:
 """
 
 import argparse
+import re
 import sys
 import numpy as np
 import pandas as pd
@@ -418,6 +419,9 @@ Beispiele:
 
 def main():
     args = parse_args()
+
+    # Sanitize ticker: only alphanumeric, dash, and dot (prevents path traversal)
+    args.ticker = re.sub(r'[^a-zA-Z0-9.-]', '', args.ticker)
 
     # Schlusskurse laden und daraus Log-Returns berechnen.
     prices = load_prices(
