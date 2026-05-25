@@ -36,6 +36,13 @@ except ImportError:
 def load_prices(ticker: str, period: str = None, start: str = None, end: str = None) -> pd.Series:
     """Lädt Schlusskurse via yfinance."""
     t = yf.Ticker(ticker)
+
+    # Warnen, wenn nur start oder nur end angegeben wurde
+    if (start and not end) or (end and not start):
+        print("⚠ --start ohne --end (oder --end ohne --start), "
+              "fälle auf period=2y zurück")
+        start = end = None
+
     if start and end:
         df = t.history(start=start, end=end)
     elif period:
