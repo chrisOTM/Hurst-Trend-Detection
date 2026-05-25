@@ -54,6 +54,11 @@ def load_prices(ticker: str, period: str = None, start: str = None, end: str = N
         raise ValueError(f"Keine Daten für '{ticker}' gefunden.")
 
     prices = df["Close"].dropna()
+    if prices.empty:
+        raise ValueError(
+            f"Keine gültigen Schlusskurse für '{ticker}' "
+            f"nach Entfernen von NaN-Werten."
+        )
     print(f"\n✓ {ticker}: {len(prices)} Datenpunkte "
           f"({prices.index[0].date()} → {prices.index[-1].date()})")
     return prices
@@ -154,8 +159,10 @@ def hurst_dfa(series: np.ndarray, min_window: int = 10) -> tuple:
             f_list.append(np.sqrt(np.mean((seg - trend) ** 2)))
 
         if f_list:
-            fluctuations.append(np.mean(f_list))
-            valid_windows.append(w)
+            fluctuation = np.mean(f_list)
+            if fluctuation > 1e-10:
+                fluctuations.append(fluctuation)
+                valid_windows.append(w)
 
     if len(valid_windows) < 5:
         raise ValueError("Zu wenige Datenpunkte für DFA.")
