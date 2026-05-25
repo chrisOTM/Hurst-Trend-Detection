@@ -54,6 +54,11 @@ def load_prices(ticker: str, period: str = None, start: str = None, end: str = N
         raise ValueError(f"Keine Daten für '{ticker}' gefunden.")
 
     prices = df["Close"].dropna()
+    if prices.empty:
+        raise ValueError(
+            f"Keine gültigen Schlusskurse für '{ticker}' "
+            f"nach Entfernen von NaN-Werten."
+        )
     print(f"\n✓ {ticker}: {len(prices)} Datenpunkte "
           f"({prices.index[0].date()} → {prices.index[-1].date()})")
     return prices
