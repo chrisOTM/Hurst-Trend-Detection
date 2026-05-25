@@ -154,8 +154,10 @@ def hurst_dfa(series: np.ndarray, min_window: int = 10) -> tuple:
             f_list.append(np.sqrt(np.mean((seg - trend) ** 2)))
 
         if f_list:
-            fluctuations.append(np.mean(f_list))
-            valid_windows.append(w)
+            fluctuation = np.mean(f_list)
+            if fluctuation > 1e-10:
+                fluctuations.append(fluctuation)
+                valid_windows.append(w)
 
     if len(valid_windows) < 5:
         raise ValueError("Zu wenige Datenpunkte für DFA.")
