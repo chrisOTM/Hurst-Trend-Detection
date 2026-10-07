@@ -2,3 +2,5 @@ AGENTS.md
 src/__pycache__/hurst.cpython-314.pyc
 
 .venv/
+# Local agent tooling (graphify hooks, Codex/Claude scaffolding, caches)
+__pycache__/
